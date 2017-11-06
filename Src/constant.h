@@ -13,7 +13,7 @@ const int ms(1000);						//transform ms into s
 const double toMs(0.001);				//transform second into ms
 const int bufferSize(16);  				//1+synaptic_delay
 const int synaptic_delay(15);			//delay before the spike is recorded by the receiving neurone
-const double g(3);	
+const double g(5);	
 const double Je(0.0001); 
 const double Ji(-g*Je);			
 const int Ne(10000);					//Excitatory neurons

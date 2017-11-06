@@ -8,7 +8,7 @@
 
 TEST (NeuroneTest , PotentialInitialisation) {
 	Neurone neurone(Excitatory);
-	EXPECT_EQ(-0.070, neurone.getMembranePotential());
+	EXPECT_EQ(0, neurone.getMembranePotential());
 }
 
 TEST (NeuronTest , SpikeTimes) {
@@ -20,8 +20,8 @@ TEST (NeuronTest , SpikeTimes) {
 	}
 	std::vector<int> SpikeTimes (neurone.getSpikeTimes());
 	EXPECT_EQ(924, SpikeTimes[0]);
-	EXPECT_EQ(1868, SpikeTimes[1]);
-	EXPECT_EQ(2812, SpikeTimes[2]);	
+	EXPECT_EQ(1731, SpikeTimes[1]);
+	EXPECT_EQ(2538, SpikeTimes[2]);	
 }
 
 TEST (NeuronTest, Doesnt_reach_treshold) {
@@ -46,11 +46,13 @@ TEST (TwoNeurones, ReceiveTime) {
 	for (unsigned int i (0) ; i < 925 + synaptic_delay; ++i) {
 		if (neurone1.update(i)) {
 			neurone2.receive(i+synaptic_delay,Excitatory);
-			EXPECT_EQ(-0.070, neurone1.getMembranePotential());
+			bool isEqual(std::fabs(0.010 - neurone1.getMembranePotential()) < std::numeric_limits<double>::epsilon());
+			EXPECT_TRUE(isEqual);
+			EXPECT_EQ(0.010, neurone1.getMembranePotential());
 		}
 		neurone2.update(i);
 	}
-	EXPECT_EQ(-0.0699,neurone2.getMembranePotential());
+	EXPECT_EQ(0.0001,neurone2.getMembranePotential());
 }
 
 TEST (TwoNeurones , Neurone2_Spike) {
@@ -61,10 +63,10 @@ TEST (TwoNeurones , Neurone2_Spike) {
 	neurone2.setIext(1.0e-9);
 	neurone2.setTestMode();
 
-	for (unsigned int i (0) ; i < 1869 + synaptic_delay; ++i) {
+	for (unsigned int i (0) ; i < 1732 + synaptic_delay; ++i) {
 		if (neurone1.update(i)) {
 			neurone2.receive(i+synaptic_delay,Excitatory);
-			EXPECT_EQ(-0.070, neurone1.getMembranePotential());
+			EXPECT_EQ(0.010, neurone1.getMembranePotential());
 		}
 		bool update;
 		update = neurone2.update(i);
@@ -73,10 +75,10 @@ TEST (TwoNeurones , Neurone2_Spike) {
 	unsigned long int size = 0;
 	EXPECT_EQ(size,(neurone2.getSpikeTimes()).size());
 	bool update;
-	update = neurone2.update(1869+synaptic_delay);
+	update = neurone2.update(1732+synaptic_delay);
 
 	size = 1;
-	EXPECT_EQ(-0.070, neurone2.getMembranePotential());
+	EXPECT_EQ(0.010, neurone2.getMembranePotential());
 	EXPECT_EQ(size,(neurone2.getSpikeTimes()).size());
 }
 
