@@ -46,8 +46,6 @@ TEST (TwoNeurones, ReceiveTime) {
 	for (unsigned int i (0) ; i < 925 + synaptic_delay; ++i) {
 		if (neurone1.update(i)) {
 			neurone2.receive(i+synaptic_delay,Excitatory);
-			bool isEqual(std::fabs(0.010 - neurone1.getMembranePotential()) < std::numeric_limits<double>::epsilon());
-			EXPECT_TRUE(isEqual);
 			EXPECT_EQ(0.010, neurone1.getMembranePotential());
 		}
 		neurone2.update(i);

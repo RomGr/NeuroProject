@@ -50,7 +50,7 @@ void Network::update(unsigned int time_f) {
 				}
 			}
 			++t;
-			std::cout<<t*0.1<<std::endl;
+			PrintProgress(t,time_f);
 		}
 	}
 }
@@ -92,4 +92,22 @@ void Network::ConnectEachNeurone() {
 
 std::vector<Neurone*>& Network::getNeurones() {
 	return neurones_;
+}
+
+void Network::PrintProgress(double time, double time_f) {
+	double progress = 0.0;
+    int barWidth = 70;
+
+    progress = (time)/(time_f);
+
+   	int pos (progress*barWidth);
+
+    std::cout << "[";
+    for (int i = 0; i < barWidth; ++i) {
+        if (i < pos) std::cout << "=";
+        else if (i == pos) std::cout << ">";
+        else std::cout << " ";
+    }
+    std::cout << "] " << int(progress * 100.0) << " %\r";
+	std::cout.flush();
 }

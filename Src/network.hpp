@@ -73,6 +73,13 @@ class Network {
 		*/
 		std::vector<Neurone*>& getNeurones();
 	
+		/**
+		*  @brief Print the run progress
+		*
+		*  @param time 			Simulation time.
+		*  @param time_f		Final simulation time.
+		*/
+		void PrintProgress(double time, double time_f);
 };
 
 #endif
