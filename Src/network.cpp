@@ -60,8 +60,7 @@ void Network::printSpikeTimes(std::ofstream& donnees, int time_f) {
 
 	std::vector<std::vector<int>> AllSpikeTimes = std::vector<std::vector<int>> (time_f);
 
-	for(size_t i(0); i < neurones_.size(); ++i) {
-		if (not (neurones_[i]->getStatus()==Inhibitory)) {
+	for(size_t i(0); i < numberOfInterest; ++i) {
 		if (neurones_[i]->getSpikeTimes().empty()) {
 			//We do nothing
 		} else {
@@ -69,7 +68,6 @@ void Network::printSpikeTimes(std::ofstream& donnees, int time_f) {
 				AllSpikeTimes[(neurones_[i]->getSpikeTimes())[j]].push_back(i);
 			} 
 		}
-	}
 	}
 
 	char tab = '\t';

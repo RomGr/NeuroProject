@@ -135,7 +135,7 @@ void Neurone::MakeConnections(std::vector<Neurone*>& neurones, int neuroneNumber
 double Neurone::BackgroundInput() const {
 	static std::random_device rd;
 	static std::mt19937 gen(rd());
-	std::poisson_distribution<> d(MeanByDeltaTime);
+	static std::poisson_distribution<> d(MeanByDeltaTime);
 
 	return (d(rd))*Je;
 }
