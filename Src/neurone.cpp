@@ -36,10 +36,10 @@ bool Neurone::update(unsigned int t) {
 		membrane_potential_=new_potential;
 		// 5) update the membrane potential
 		if (membrane_potential_<0.0) {
-			membrane_potential_=0.0;
-		}
+			membrane_potential_=Refractory_potential;
+			}
 	} else {
-		membrane_potential_=Standard_potential;
+		membrane_potential_=Refractory_potential;
 	}
 	
 	buffer_.update();
@@ -74,7 +74,7 @@ bool Neurone::Spike(unsigned int t) {
 	if(membrane_potential_ >= Spike_Treshold) {
 		spikes_times_.push_back(t);
 		// 1) stores the spike time
-		membrane_potential_=Standard_potential;
+		membrane_potential_=Refractory_potential;
 		// 2) reinitialize the membrane potential
 		clock_rest_time_=TauR;
 		// 3) set the rest time
@@ -133,8 +133,8 @@ void Neurone::MakeConnections(std::vector<Neurone*>& neurones, int neuroneNumber
 
 
 double Neurone::BackgroundInput() const {
-	std::random_device rd;
-	std::mt19937 gen(rd());
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
 	std::poisson_distribution<> d(MeanByDeltaTime);
 
 	return (d(rd))*Je;

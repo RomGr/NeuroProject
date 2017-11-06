@@ -19,9 +19,7 @@ int main () {
 	} while (temps_f <= 0 );
 	
 	ofstream donnees ("donnees.txt", ios::out);
-
-	std::cout << MeanByDeltaTime << std::endl;
-
+	
 	unsigned int t (std::round(temps_f/DeltaTime));
 	
 	Network network;
