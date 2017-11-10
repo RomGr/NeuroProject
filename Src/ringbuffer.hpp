@@ -19,11 +19,6 @@ class RingBuffer {
 		*  Contains the informations about incoming spikes
 		*/
 		std::vector<double> buffer_;
-
-		/**
-		*  Local clock
-		*/
-		int clock_;
 	
 	public :
 		
@@ -36,7 +31,7 @@ class RingBuffer {
 		*  @brief  Updates the buffer : we make the ring turn and we
 		*  increment the local clock.
 		*/
-		void update();
+		void update(size_t current_index);
 
 		/**
 		*  @brief  Add a new value at time t.
@@ -44,12 +39,12 @@ class RingBuffer {
 		*  @param  time 		Incoming time.
 		*  @param J				Weight of the connection.
 		*/
-		void addValue(int time, double J);
+		void addValue(size_t index, double J);
 
 		/**
 		*  @brief  Returns the value of incoming spikes for the current time.
 		*/
-		double valueFor() const;
+		double valueFor(size_t current_index) const;
 }; 
 
 #endif

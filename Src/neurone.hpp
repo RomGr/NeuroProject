@@ -126,12 +126,12 @@ class Neurone {
 		*  @param status		Status of the spiking neurone (Excitatory or Inhibitory) : 
 		*  an inhibitory will low the membrane potential and an excitatory neurone will increase it.
 		*/
-		void receive(int D, Status status);
+		void receive(size_t D, Status status);
 		
 		/**
 		*  @brief  Return the outside input (from other neurones) for the current time.
 		*/
-		double outsideInput() const;
+		double outsideInput(size_t current_index) const;
 
 		/**
 		*  @brief  Make connections with others neurones.
@@ -156,7 +156,7 @@ class Neurone {
 		*  
 		*  @param t			Spike time
 		*/
-		void sendInformation (int t) const ;
+		void sendInformation (size_t current_index) const ;
 
 		/**
 		*  @brief Set test mode to true.

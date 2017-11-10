@@ -19,6 +19,8 @@ Neurone::~Neurone()
 bool Neurone::update(unsigned int t) {
 
 	bool spike(false);
+	size_t current_index(t%bufferSize);
+
 	spike=Spike(t);
 	// 1) make the neurone spike and set it refractory (if necessary)
 	
@@ -27,7 +29,7 @@ bool Neurone::update(unsigned int t) {
 		new_potential = c1*(membrane_potential_);
 		new_potential += I_ext_*(Resistance)*(1-c1);
 		// 2) calculate the new potential
-		new_potential += outsideInput();
+		new_potential += outsideInput(current_index);
 		// 3) add the potential created by other neurones
 		if (not test_) {
 			new_potential += BackgroundInput();
@@ -42,7 +44,7 @@ bool Neurone::update(unsigned int t) {
 		membrane_potential_=Refractory_potential;
 	}
 	
-	buffer_.update();
+	buffer_.update(current_index);
 	
 	return spike;
 }
@@ -89,7 +91,7 @@ std::vector<int> Neurone::getSpikeTimes() const {
 } 
 
 
-void Neurone::receive(int D, Status status) {
+void Neurone::receive(size_t D, Status status) {
 	if (status==Excitatory) {
 		buffer_.addValue(D,Je);
 	}
@@ -99,8 +101,8 @@ void Neurone::receive(int D, Status status) {
 }
 
 
-double Neurone::outsideInput() const {
-	double input(buffer_.valueFor());
+double Neurone::outsideInput(size_t current_index) const {
+	double input(buffer_.valueFor(current_index));
 	return input;
 }
 
@@ -146,9 +148,9 @@ Status Neurone::getStatus() const {
 }
 
 
-void Neurone::sendInformation (int t) const {
+void Neurone::sendInformation (size_t current_index) const {
 	for (auto neu : targets_) {
-		neu->receive(t,status_);
+		neu->receive(current_index,status_);
 	}
 }
 

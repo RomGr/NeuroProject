@@ -40,13 +40,15 @@ void Network::update(unsigned int time_f) {
 
 	while (t < time_f) {
 		if (not neurones_.empty()) {
-			int delay (t+synaptic_delay);
+
+			size_t current_index((t+synaptic_delay-1)%bufferSize);
+			
 			for (auto& neu : neurones_) {
 				bool spike(false);
 				spike=neu->update(t);
 				// Verify for each neurone if it spikes
 				if (spike) {
-				neu->sendInformation(delay);
+				neu->sendInformation(current_index);
 				}
 			}
 			++t;
@@ -103,7 +105,7 @@ void Network::PrintProgress(double time, double time_f) {
     std::cout << "[";
     for (int i = 0; i < barWidth; ++i) {
         if (i < pos) std::cout << "=";
-        else if (i == pos) std::cout << ">";
+        else if (i == pos) std::cout << "|";
         else std::cout << " ";
     }
     std::cout << "] " << int(progress * 100.0) << " %\r";

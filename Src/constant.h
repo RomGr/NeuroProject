@@ -7,13 +7,13 @@ const double DeltaTime(0.0001);			//pas de temps
 const double Resistance(20e6);			//Ohm
 const double Standard_potential(0);		//V
 const double Refractory_potential(0.010);
-const double ETA(4);
+const double ETA(0.9);
 const int mV(1000);						//transform mV into V
 const int ms(1000);						//transform ms into s
 const double toMs(0.001);				//transform second into ms
 const int bufferSize(16);  				//1+synaptic_delay
 const int synaptic_delay(15);			//delay before the spike is recorded by the receiving neurone
-const double g(6);
+const double g(4.5);
 const double Je(0.0001); 
 const double Ji(-g*Je);			
 const int Ne(10000);					//Excitatory neurons

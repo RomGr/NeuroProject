@@ -43,9 +43,9 @@ TEST (TwoNeurones, ReceiveTime) {
 	Neurone neurone2(Excitatory);
 	neurone2.setTestMode();
 
-	for (unsigned int i (0) ; i < 925 + synaptic_delay; ++i) {
+	for (unsigned int i (0) ; i < 924 + synaptic_delay; ++i) {
 		if (neurone1.update(i)) {
-			neurone2.receive(i+synaptic_delay,Excitatory);
+			neurone2.receive((i+synaptic_delay-1)%bufferSize,Excitatory);
 			EXPECT_EQ(0.010, neurone1.getMembranePotential());
 		}
 		neurone2.update(i);
@@ -61,9 +61,9 @@ TEST (TwoNeurones , Neurone2_Spike) {
 	neurone2.setIext(1.0e-9);
 	neurone2.setTestMode();
 
-	for (unsigned int i (0) ; i < 1732 + synaptic_delay; ++i) {
+	for (unsigned int i (0) ; i < 1731 + synaptic_delay; ++i) {
 		if (neurone1.update(i)) {
-			neurone2.receive(i+synaptic_delay,Excitatory);
+			neurone2.receive((i+synaptic_delay-1)%bufferSize,Excitatory);
 			EXPECT_EQ(0.010, neurone1.getMembranePotential());
 		}
 		bool update;
@@ -83,11 +83,11 @@ TEST (TwoNeurones , Neurone2_Spike) {
 TEST (TwoNeurones, Inhibitory_Excitatory_Test) {
 	RingBuffer buffer;
 	buffer.addValue(0,Ji);
-	EXPECT_EQ(-0.0005, buffer.valueFor());
+	EXPECT_EQ(-0.0005, buffer.valueFor(0));
 	buffer.addValue(0,Je);
-	EXPECT_EQ(-0.0004,buffer.valueFor());
+	EXPECT_EQ(-0.0004,buffer.valueFor(0));
 	buffer.addValue(0,4*Je);
-	EXPECT_EQ(0.0000,buffer.valueFor());
+	EXPECT_EQ(0.0000,buffer.valueFor(0));
 }
 
 TEST(NetworkTest, NetworkNumbers) {
@@ -123,7 +123,7 @@ TEST(NetworkTest, Verify_Excitatory_Connection) {
 	neurones[0]->addConnection(neurones,1);
 	neurones[0]->sendInformation(0);
 
-	EXPECT_EQ(0.0001,neurones[1]->outsideInput());
+	EXPECT_EQ(0.0001,neurones[1]->outsideInput(0));
 
 }
 
@@ -136,7 +136,7 @@ TEST (NetworkTest, Verify_Inhibitory_Connection) {
 	neurones[10000]->addConnection(neurones,1);
 	neurones[10000]->sendInformation(0);
 
-	EXPECT_EQ(-0.0005,neurones[1]->outsideInput());
+	EXPECT_EQ(-0.0005,neurones[1]->outsideInput(0));
 }
 
 TEST (NetworkTest, Verify_Connection_Numbers) {
