@@ -6,6 +6,7 @@
 RingBuffer::RingBuffer() :
 			buffer_(bufferSize) {}
 			
+
 void RingBuffer::update(size_t current_index) {
 	
 
@@ -13,11 +14,13 @@ void RingBuffer::update(size_t current_index) {
 
 }
 
-void RingBuffer::addValue(size_t index, double J) {
+
+void RingBuffer::addValue(unsigned int index, double J) {
 	
-	// Rentrée de cette valeur dans le tableau
+	//we put the value into the vector
 	buffer_[index] += J;
 }
+
 
 double RingBuffer::valueFor(size_t current_index) const {
 	

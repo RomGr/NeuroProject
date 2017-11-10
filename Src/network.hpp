@@ -17,6 +17,7 @@
  */
 class Network {
 	
+
 	private :
 	
 		/**
@@ -24,6 +25,7 @@ class Network {
 		*/
 		std::vector<Neurone*> neurones_;
 	
+
 	public :
 	
 		/**
@@ -54,14 +56,6 @@ class Network {
 		*  @param time_f			Final simulation time.
 		*/
 		void update(unsigned int time_f);
-		
-		/**
-		*  @brief  Print how many spikes are identified by unit of time.
-		* 
-		*  @param donnees		Where to write.
-		*  @param time_f		Final simulation time.
-		*/
-		void printSpikeTimes(std::ofstream& donnees, int time_f);
 
 		/**
 		*  @brief  Make each neurone connect with the others.
@@ -80,6 +74,14 @@ class Network {
 		*  @param time_f		Final simulation time.
 		*/
 		void PrintProgress(double time, double time_f);
+
+		/**
+		*  @brief  Print how many spikes are identified by unit of time.
+		* 
+		*  @param donnees		Where to write.
+		*  @param time_f		Final simulation time.
+		*/
+		void printSpikeTimes(std::ofstream& donnees, int time_f);
 };
 
 #endif

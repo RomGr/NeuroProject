@@ -8,7 +8,7 @@
 \f0\fs24 \cf0 import numpy as np\
 import matplotlib.pyplot as pl\
 \
-data = np.genfromtxt('donnees.txt')\
+data = np.genfromtxt('data.txt')\
 \
 select = np.array([d for d in data if d[1]<100])\
 data1 = select.transpose()\

@@ -4,7 +4,7 @@
 #include "network.hpp"
 #include "constant.h"
 #include <fstream>
-#include <tgmath.h>
+#include <string>
 
 using namespace std;
 
@@ -18,7 +18,7 @@ int main () {
 		temps_f = AskForTime();
 	} while (temps_f <= 0 );
 	
-	ofstream donnees ("donnees.txt", ios::out);
+	ofstream donnees ("data.txt", ios::out);
 	
 	unsigned int t (std::round(temps_f/DeltaTime));
 	
@@ -26,29 +26,29 @@ int main () {
 
 	network.initialize();
 
-	std::cerr << "Neurones added, the network is initialized !" << std::endl;
-	std::cout << std::endl;
+	cerr << "Neurones added, the network is initialized !" << endl;
+	cout << endl;
 
 	network.ConnectEachNeurone();
 
-	std::cerr << "The neurones are connected, we are ready for the simulation" << std::endl;
-	std::cout << std::endl;
+	cerr << "The neurones are connected, we are ready for the simulation" << endl;
+	cout << endl;
 
 	network.update(t);
 
-	std::cout << std::endl;
-	std::cout << std::endl;
-	std::cerr << "The simulation is completed" << std::endl;
-	std::cout << std::endl;
+	cout << endl;
+	cout << endl;
+	cerr << "The simulation is completed" << endl;
+	cout << endl;
 
 	network.printSpikeTimes(donnees, t);
 
-	std::cerr << "The datas are printed in build/donnees.txt" << std::endl;
-	std::cout << std::endl;
+	cerr << "The datas are printed in build/data.txt" << endl;
+	cout << endl;
 	
 	donnees.close();
 	
-	std::cerr << "See you Soon !" << std::endl;
+	cerr << "See you Soon !" << endl;
 	return 0;
 }
 
@@ -57,8 +57,20 @@ double AskForTime() {
 
 	double duree (0);
 
-	std::cout << "Entrez la durée de la simulation (en ms) : " << std::endl << std::endl;
+	try {
+	cout << "Entrez la durée de la simulation (en ms) : " << endl << endl;
 	cin >> duree;
+	if(!cin) {
+		throw string("Merci d'entrer un nombre"); 
+	}
+}
+	catch (string& message) {
+		cin.clear();
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << endl;
+		cerr << message << endl;
+	}
+
 	std::cout << endl;
 
 	return duree*toMs;
