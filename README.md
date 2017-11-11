@@ -60,7 +60,7 @@ You can launch the program by tiping in the build repository :
 
 After that, you have to enter the duration of the simulation and... let's go !
 
-To plot the results, you may open a Jupyter notebook [Jupyter](https://try.jupyter.org/). You upload the data.txt file, paste into a Python 3 notebook the content of the Jupyter file. Then you run it... It's ok!
+To plot the results, you may open a [Jupyter](https://try.jupyter.org/) notebook. You upload the data.txt file, paste into a Python 3 notebook the content of the Jupyter file. Then you run it... It's ok!
 
 You can change the parameters of the simulation in the file /Src/Constants.h (by default, g=5 and ETA = 2)
 
