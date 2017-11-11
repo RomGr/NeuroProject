@@ -46,7 +46,7 @@ class Network {
 		/**
 		*  @brief  Add a neuron to the network.
 		* 
-		*  @param neurone		Neuron to add.
+		*  @param neuron		Neuron to add.
 		*/
 		void addNeuron(Neuron* neuron);
 	
