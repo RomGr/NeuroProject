@@ -6,7 +6,7 @@ The program allows the simulation of a 12'500 neurons network. The neurons can i
 
 ## Presentation
 
-### Neurone
+### Neuron
 
 A neuron is an electrically excitable cell that receives, processes, and transmits information through electrical and chemical signals. The connection between two neurons is called synapse. There are two types of neuron :
 - Inhibitory : it will send inhibitory spikes (to « prevent » other neurons to spike),

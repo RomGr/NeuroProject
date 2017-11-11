@@ -3,8 +3,8 @@
 #include <random>
 #include "ringbuffer.hpp"
 
-#ifndef NEURONE_H
-#define NEURONE_H
+#ifndef NEURON_H
+#define NEURON_H
 
 
 /**
@@ -17,34 +17,34 @@ Inhibitory};
 
 
 /*!
- * @class Neurone
+ * @class Neuron
  *
- * @brief Represents a neurone. It can spike, interact with other neurones...
+ * @brief Represents a neuron. It can spike, interact with other neurons...
  */
-class Neurone {
+class Neuron {
 
 	private : 
 
 		/**
-		*  Contains the type of the neurone (Excitatory or inhibitory)
+		*  Contains the type of the neuron (Excitatory or inhibitory)
 		*/
 		Status status_;
 		
 		/**
-		*  Represents the neurone's membrane potential
+		*  Represents the neuron's membrane potential
 		*/
 		double membrane_potential_;
 		
 		/**
-		*  Buffer for the neurone (used to manage incoming events)
+		*  Buffer for the neuron (used to manage incoming events)
 		*/
 		RingBuffer buffer_;
 
 		/**
-		*  All of the neurones linked with the neurone. When it spikes,
-		*  it sends informations to every neurones in the vector.
+		*  All of the neurons linked with the neuron. When it spikes,
+		*  it sends informations to every neurons in the vector.
 		*/
-		std::vector<Neurone*> targets_;
+		std::vector<Neuron*> targets_;
 
 		/**
 		*  Manage the rest time
@@ -71,23 +71,23 @@ class Neurone {
 	public :
 
 		/**
-		*  @brief  Neurone constructor (the initiation constants are in constant.h).
+		*  @brief  Neuron constructor (the initiation constants are in constant.h).
 		*/
-		Neurone(Status status);
+		Neuron(Status status);
 
 		/**
-		*  @brief  Neurone destructor
+		*  @brief  Neuron destructor
 		*/
-		~Neurone();
+		~Neuron();
 
 
 
-	//Every methods that are used in the updating of the neurone :
+	//Every methods that are used in the updating of the neuron :
 
 
 
 		/**
-		*  @brief  Update the neurone (change the membrane potential, make it 
+		*  @brief  Update the neuron (change the membrane potential, make it 
 		*  spike if the treshold is reached and manage rest time).
 		* 
 		*  @param t 					Simulation time.
@@ -95,7 +95,7 @@ class Neurone {
 		bool update (unsigned int t);
 
 		/**
-		*  @brief  Test if the treshold is reached, if it is, make the neurone spike
+		*  @brief  Test if the treshold is reached, if it is, make the neuron spike
 		*  and reinitialize the membrane potential. Store the spike's time.
 		* 
 		*  @param t 					Used to store the spike's time.
@@ -111,17 +111,17 @@ class Neurone {
 
 
 
-	//Every methods that are used to manage incomning informations and prevent other neurones of spiking:
+	//Every methods that are used to manage incomning informations and transmit the information :
 
 
 
 
 		/**
-		*  @brief Receive a spike from another neurone.
+		*  @brief Receive a spike from another neuron.
 		* 
 		*  @param current_index	Index in the buffer for the spike.
-		*  @param status		Status of the spiking neurone (Excitatory or Inhibitory) : 
-		*  an inhibitory will low the membrane potential and an excitatory neurone will increase it.
+		*  @param status		Status of the spiking neuron (Excitatory or Inhibitory) : 
+		*  an inhibitory one will low the membrane potential and an excitatory one will increase it.
 		*/
 		void receive(unsigned int current_index, Status status);
 
@@ -138,7 +138,7 @@ class Neurone {
 		double BackgroundInput() const;
 
 		/**
-		*  @brief Send to every targetted neurone the spike information (used only if it spikes).
+		*  @brief Send to every targetted neuron the spike information (used only if it spikes).
 		*  
 		*  @param current_index			Current index.
 		*/
@@ -152,21 +152,21 @@ class Neurone {
 
 
 		/**
-		*  @brief  Make connections with others neurones.
+		*  @brief  Make connections with others neurons.
 		* 
-		*  @param neurones		Network's neurones list.
-		*  @param neuroneNumber	The current neurone number's in the network neurones list
+		*  @param neurones		Network's neurons list.
+		*  @param neuroneNumber	The current neuron number's in the network neurons list
 		*/
-		void MakeConnections(std::vector<Neurone*>& neurones, int neuroneNumber);
+		void MakeConnections(std::vector<Neuron*>& neurones, int neuroneNumber);
 
 		/**
-		*  @brief Add one connection (one new targetted neurone)
+		*  @brief Add one connection (one new targetted neuron)
 		*  
-		*  @param neurones		Network's neurones list
-		*  @param targetNumber	Number of the target int the network's list
+		*  @param neurones		Network's neuroes list
+		*  @param targetNumber	Number of the target in the network's list
 		*/
 
-		void addConnection(std::vector<Neurone*>& neurones, int targetNumber);
+		void addConnection(std::vector<Neuron*>& neurones, int targetNumber);
 
 
 
@@ -186,7 +186,7 @@ class Neurone {
 		std::vector<int> getSpikeTimes() const;
 	
 		/**
-		*  @brief Getter for the status of the neurone.
+		*  @brief Getter for the status of the neuron.
 		*/
 		Status getStatus() const;
 
@@ -206,7 +206,7 @@ class Neurone {
 		*  @brief TestMode
 		*/
 
-		int countConnection(int i,std::vector<Neurone*>& neurones, int& InCounteur, int& ExCounteur);
+		int countConnection(int i,std::vector<Neuron*>& neurons, int& InCounteur, int& ExCounteur);
 	
 };
 

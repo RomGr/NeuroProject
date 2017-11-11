@@ -1,86 +1,86 @@
 #include <iostream>
 #include <vector>
-#include "../Src/neurone.hpp"
+#include "../Src/neuron.hpp"
 #include "../Src/network.hpp"
 #include "../../googletest/include/gtest/gtest.h"
 #include "../Src/constant.h"
 
 
-TEST (NeuroneTest , PotentialInitialisation) {
-	Neurone neurone(Excitatory);
-	EXPECT_EQ(0, neurone.getMembranePotential());
+TEST (NeuronTest , PotentialInitialisation) {
+	Neuron neuron(Excitatory);
+	EXPECT_EQ(0, neuron.getMembranePotential());
 }
 
 TEST (NeuronTest , SpikeTimes) {
-	Neurone neurone(Excitatory);
-	neurone.setTestMode();
-	neurone.setIext(1.01e-9);
+	Neuron neuron(Excitatory);
+	neuron.setTestMode();
+	neuron.setIext(1.01e-9);
 	for (unsigned int i(0); i < 3000 ; ++i) {
-		neurone.update(i);
+		neuron.update(i);
 	}
-	std::vector<int> SpikeTimes (neurone.getSpikeTimes());
+	std::vector<int> SpikeTimes (neuron.getSpikeTimes());
 	EXPECT_EQ(924, SpikeTimes[0]);
 	EXPECT_EQ(1731, SpikeTimes[1]);
 	EXPECT_EQ(2538, SpikeTimes[2]);	
 }
 
 TEST (NeuronTest, Doesnt_reach_treshold) {
-	Neurone neurone(Excitatory);
-	neurone.setTestMode();
-	neurone.setIext(1.0e-9);
+	Neuron neuron(Excitatory);
+	neuron.setTestMode();
+	neuron.setIext(1.0e-9);
 	for (unsigned int i(0); i < 10000 ; ++i) {
-		neurone.update(i);
+		neuron.update(i);
 	}
-	std::vector<int> SpikeTimes(neurone.getSpikeTimes());
+	std::vector<int> SpikeTimes(neuron.getSpikeTimes());
 	unsigned int size (0);
 	EXPECT_EQ(size, SpikeTimes.size());
 }
 
-TEST (TwoNeurones, ReceiveTime) {
-	Neurone neurone1(Excitatory);
-	neurone1.setIext(1.01e-9);
-	neurone1.setTestMode();
-	Neurone neurone2(Excitatory);
-	neurone2.setTestMode();
+TEST (TwoNeurons, ReceiveTime) {
+	Neuron neuron1(Excitatory);
+	neuron1.setIext(1.01e-9);
+	neuron1.setTestMode();
+	Neuron neuron2(Excitatory);
+	neuron2.setTestMode();
 
 	for (unsigned int i (0) ; i < 924 + synaptic_delay; ++i) {
-		if (neurone1.update(i)) {
-			neurone2.receive((i+synaptic_delay-1)%bufferSize,Excitatory);
-			EXPECT_EQ(0.010, neurone1.getMembranePotential());
+		if (neuron1.update(i)) {
+			neuron2.receive((i+synaptic_delay-1)%bufferSize,Excitatory);
+			EXPECT_EQ(0.010, neuron1.getMembranePotential());
 		}
-		neurone2.update(i);
+		neuron2.update(i);
 	}
-	EXPECT_EQ(0.0001,neurone2.getMembranePotential());
+	EXPECT_EQ(0.0001,neuron2.getMembranePotential());
 }
 
-TEST (TwoNeurones , Neurone2_Spike) {
-	Neurone neurone1(Excitatory);
-	neurone1.setIext(1.01e-9);
-	neurone1.setTestMode();
-	Neurone neurone2(Excitatory);
-	neurone2.setIext(1.0e-9);
-	neurone2.setTestMode();
+TEST (TwoNeurons , Neuron2_Spike) {
+	Neuron neuron1(Excitatory);
+	neuron1.setIext(1.01e-9);
+	neuron1.setTestMode();
+	Neuron neuron2(Excitatory);
+	neuron2.setIext(1.0e-9);
+	neuron2.setTestMode();
 
 	for (unsigned int i (0) ; i < 1731 + synaptic_delay; ++i) {
-		if (neurone1.update(i)) {
-			neurone2.receive((i+synaptic_delay-1)%bufferSize,Excitatory);
-			EXPECT_EQ(0.010, neurone1.getMembranePotential());
+		if (neuron1.update(i)) {
+			neuron2.receive((i+synaptic_delay-1)%bufferSize,Excitatory);
+			EXPECT_EQ(0.010, neuron1.getMembranePotential());
 		}
 		bool update;
-		update = neurone2.update(i);
+		update = neuron2.update(i);
 	}
 	//just before neurone 2 spikes
 	unsigned long int size = 0;
-	EXPECT_EQ(size,(neurone2.getSpikeTimes()).size());
+	EXPECT_EQ(size,(neuron2.getSpikeTimes()).size());
 	bool update;
-	update = neurone2.update(1732+synaptic_delay);
+	update = neuron2.update(1732+synaptic_delay);
 
 	size = 1;
-	EXPECT_EQ(0.010, neurone2.getMembranePotential());
-	EXPECT_EQ(size,(neurone2.getSpikeTimes()).size());
+	EXPECT_EQ(0.010, neuron2.getMembranePotential());
+	EXPECT_EQ(size,(neuron2.getSpikeTimes()).size());
 }
 
-TEST (TwoNeurones, Inhibitory_Excitatory_Test) {
+TEST (TwoNeurons, Inhibitory_Excitatory_Test) {
 	RingBuffer buffer;
 	buffer.addValue(0,Ji);
 	EXPECT_EQ(-0.0005, buffer.valueFor(0));
@@ -93,23 +93,23 @@ TEST (TwoNeurones, Inhibitory_Excitatory_Test) {
 TEST(NetworkTest, NetworkNumbers) {
 	Network network;
 	network.initialize();
-	std::vector<Neurone*> neurones;
-	neurones = network.getNeurones();
+	std::vector<Neuron*> neurons;
+	neurons = network.getNeurons();
 
 	int Icompteur(0);
 	int Ecompteur(0);
-	int NeuronesCompteur(0);
+	int NeuronsCompteur(0);
 
-	for (auto neu : neurones) {
+	for (auto neu : neurons) {
 			if (neu->getStatus()==Excitatory) {
 				++Ecompteur;
 			} else {
 				++Icompteur;
 			}
-			++NeuronesCompteur;
+			++NeuronsCompteur;
 	} 
 
-	EXPECT_EQ(12500,NeuronesCompteur);
+	EXPECT_EQ(12500,NeuronsCompteur);
 	EXPECT_EQ(10000,Ecompteur);
 	EXPECT_EQ(2500,Icompteur);
 }
@@ -117,44 +117,44 @@ TEST(NetworkTest, NetworkNumbers) {
 TEST(NetworkTest, Verify_Excitatory_Connection) {
 	Network network;
 	network.initialize();
-	std::vector<Neurone*> neurones;
-	neurones = network.getNeurones();
+	std::vector<Neuron*> neurons;
+	neurons = network.getNeurons();
 
-	neurones[0]->addConnection(neurones,1);
-	neurones[0]->sendInformation(0);
+	neurons[0]->addConnection(neurons,1);
+	neurons[0]->sendInformation(0);
 
-	EXPECT_EQ(0.0001,neurones[1]->outsideInput(0));
+	EXPECT_EQ(0.0001,neurons[1]->outsideInput(0));
 
 }
 
 TEST (NetworkTest, Verify_Inhibitory_Connection) {
 	Network network;
 	network.initialize();
-	std::vector<Neurone*> neurones;
-	neurones = network.getNeurones();
+	std::vector<Neuron*> neurons;
+	neurons = network.getNeurons();
 
-	neurones[10000]->addConnection(neurones,1);
-	neurones[10000]->sendInformation(0);
+	neurons[10000]->addConnection(neurons,1);
+	neurons[10000]->sendInformation(0);
 
-	EXPECT_EQ(-0.0005,neurones[1]->outsideInput(0));
+	EXPECT_EQ(-0.0005,neurons[1]->outsideInput(0));
 }
 
 TEST (NetworkTest, Verify_Connection_Numbers) {
 	Network network;
 	network.initialize();
-	std::vector<Neurone*> neurones;
-	neurones = network.getNeurones();
-	network.ConnectEachNeurone();
+	std::vector<Neuron*> neurons;
+	neurons = network.getNeurons();
+	network.ConnectEachNeuron();
 
-	std::vector<Neurone*> targets;
+	std::vector<Neuron*> targets;
 
 	int connectionCompteur(0);
 	int InCounteur(0);
 	int ExCounteur(0);
 
 
-	for (auto neu : neurones) {
-		connectionCompteur+=neu->countConnection(0,neurones, InCounteur, ExCounteur);
+	for (auto neu : neurons) {
+		connectionCompteur+=neu->countConnection(0,neurons, InCounteur, ExCounteur);
 	}
 
 	EXPECT_EQ(1250,connectionCompteur);

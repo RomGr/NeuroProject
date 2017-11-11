@@ -1,6 +1,6 @@
 #include <cmath>
 
-// Neurone Constants :
+// Neuron Constants :
 
 const double Spike_Treshold(0.020); 	//V
 const double Tau(0.020);				//s
@@ -14,7 +14,7 @@ const double Refractory_potential(0.010);
 // Network constants :
 
 const double ETA(2);
-const int synaptic_delay(15);			//delay before the spike is recorded by the receiving neurone
+const int synaptic_delay(15);			//delay before the spike is recorded by the receiving neuron
 const double g(5);
 const double Je(0.0001); 				//Excitatory connection weight
 const double Ji(-g*Je);					//Inhibitory connection weight

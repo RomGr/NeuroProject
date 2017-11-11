@@ -130,7 +130,7 @@
 
 
 
-		void Neurone::MakeConnections(std::vector<Neuron*>& neurons, int neuronNumber) {
+		void Neuron::MakeConnections(std::vector<Neuron*>& neurons, int neuronNumber) {
 			std::mt19937 rng(time(NULL));
 			int newNeuronNumber(0);
 
@@ -180,7 +180,7 @@
 			test_=true;
 		}
 		
-		int Neurone::countConnection(int i,std::vector<Neuron*>& neurons,int& InCounteur, int& ExCounteur)  {
+		int Neuron::countConnection(int i,std::vector<Neuron*>& neurons,int& InCounteur, int& ExCounteur)  {
 			int counter(0);
 
 				for(auto neu : targets_) {

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "neurone.hpp"
+#include "neuron.hpp"
 #include <fstream>
 #include <iomanip>
 
@@ -12,7 +12,7 @@
 /*!
  * @class Network
  *
- * @brief Represents a neurone network, allows to simulate their life and make them
+ * @brief Represents a neuron network, allows to simulate their life and make them
  * interact.
  */
 class Network {
@@ -21,9 +21,9 @@ class Network {
 	private :
 	
 		/**
-		*  The neurones of the network
+		*  The neurons of the network
 		*/
-		std::vector<Neurone*> neurones_;
+		std::vector<Neuron*> neurons_;
 	
 
 	public :
@@ -39,33 +39,33 @@ class Network {
 		~Network();
 	
 		/**
-		*  @brief Initialize the network (create each neurone) : 10'000 excitatory neurones, 2'500 inhibitory neurones.
+		*  @brief Initialize the network (create each neuron) : 10'000 excitatory neurons, 2'500 inhibitory neurons.
 		*/
 		void initialize();
 
 		/**
-		*  @brief  Add a neurone to the network.
+		*  @brief  Add a neuron to the network.
 		* 
-		*  @param neurone		Neurone to add.
+		*  @param neurone		Neuron to add.
 		*/
-		void addNeurone(Neurone* neurone);
+		void addNeuron(Neuron* neuron);
 	
 		/**
-		*  @brief  Update the network (update each neurone and make them interact if necessary).
+		*  @brief  Update the network (update each neuron and make them interact if necessary).
 		* 
 		*  @param time_f			Final simulation time.
 		*/
 		void update(unsigned int time_f);
 
 		/**
-		*  @brief  Make each neurone connect with the others.
+		*  @brief  Make each neuron connect with the others.
 		*/
-		void ConnectEachNeurone();
+		void ConnectEachNeuron();
 
 		/**
 		*  @brief TestMode
 		*/
-		std::vector<Neurone*>& getNeurones();
+		std::vector<Neuron*>& getNeurons();
 	
 		/**
 		*  @brief Print the run progress

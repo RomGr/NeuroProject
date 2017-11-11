@@ -10,8 +10,8 @@ include_directories(${gtest_SOURCE_DIR}/include ${guest_SOURCE_DIR})
 add_executable (
 	Neuro 
 	Src/main.cpp
-	Src/neurone.hpp 
-	Src/neurone.cpp
+	Src/neuron.hpp 
+	Src/neuron.cpp
 	Src/network.hpp 
 	Src/network.cpp
 	Src/ringbuffer.hpp
@@ -20,8 +20,8 @@ add_executable (
 
 add_executable (
 	UnitTest
-	Src/neurone.hpp 
-	Src/neurone.cpp
+	Src/neuron.hpp 
+	Src/neuron.cpp
 	Src/network.hpp 
 	Src/network.cpp
 	Src/ringbuffer.hpp

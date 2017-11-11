@@ -1,6 +1,6 @@
 #include <iostream>
 #include <iomanip>
-#include "neurone.hpp"
+#include "neuron.hpp"
 #include "network.hpp"
 #include "constant.h"
 #include <fstream>
@@ -26,12 +26,12 @@ int main () {
 
 	network.initialize();
 
-	cerr << "Neurones added, the network is initialized !" << endl;
+	cerr << "Neurons added, the network is initialized !" << endl;
 	cout << endl;
 
-	network.ConnectEachNeurone();
+	network.ConnectEachNeuron();
 
-	cerr << "The neurones are connected, we are ready for the simulation" << endl;
+	cerr << "The neurons are connected, we are ready for the simulation" << endl;
 	cout << endl;
 
 	network.update(t);

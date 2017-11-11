@@ -9,28 +9,28 @@
 	Network::Network() {}
 
 	Network::~Network() {
-		for (auto& neu : neurones_) {
+		for (auto& neu : neurons_) {
 			delete neu;
 			neu=nullptr;
 		}
-		neurones_.clear();
+		neurons_.clear();
 	}
 
 	void Network::initialize() {
 
 		for (size_t i(0); i < Ne; ++i) {
-			neurones_.push_back(new Neurone(Excitatory));
+			neurons_.push_back(new Neuron(Excitatory));
 		}
 
 		for (size_t i(0); i < Ni; ++i) {
-			neurones_.push_back(new Neurone(Inhibitory));
+			neurons_.push_back(new Neuron(Inhibitory));
 		}
 	}
 
-	void Network::addNeurone(Neurone* neurone) {
+	void Network::addNeuron(Neuron* neuron) {
 		
-		if (neurone != nullptr) {
-			neurones_.push_back(neurone);
+		if (neuron != nullptr) {
+			neurons_.push_back(neuron);
 		}
 		
 	}
@@ -39,9 +39,9 @@
 		unsigned int t(0);
 
 		while (t < time_f) {
-			if (not neurones_.empty()) {
+			if (not neurons_.empty()) {
 				size_t current_index((t+synaptic_delay-1)%bufferSize);
-					for (auto& neu : neurones_) {
+					for (auto& neu : neurons_) {
 						bool spike(false);
 						spike=neu->update(t);
 						// Verify for each neurone if it spikes
@@ -55,14 +55,14 @@
 		}
 	}
 
-	void Network::ConnectEachNeurone() {
-		for (size_t i(0); i < neurones_.size(); ++i)  {
-			neurones_[i]->MakeConnections(neurones_,i);
+	void Network::ConnectEachNeuron() {
+		for (size_t i(0); i < neurons_.size(); ++i)  {
+			neurons_[i]->MakeConnections(neurons_,i);
 		}
 	}
 
-	std::vector<Neurone*>& Network::getNeurones() {
-		return neurones_;
+	std::vector<Neuron*>& Network::getNeurons() {
+		return neurons_;
 	}
 
 	void Network::PrintProgress(double time, double time_f) {
@@ -88,11 +88,11 @@
 		std::vector<std::vector<int>> AllSpikeTimes = std::vector<std::vector<int>> (time_f);
 
 		for(size_t i(0); i < numberOfInterest; ++i) {
-			if (neurones_[i]->getSpikeTimes().empty()) {
+			if (neurons_[i]->getSpikeTimes().empty()) {
 				//We do nothing
 			} else {
-				for(size_t j(0); j < (neurones_[i]->getSpikeTimes()).size(); ++j) {
-					AllSpikeTimes[(neurones_[i]->getSpikeTimes())[j]].push_back(i);
+				for(size_t j(0); j < (neurons_[i]->getSpikeTimes()).size(); ++j) {
+					AllSpikeTimes[(neurons_[i]->getSpikeTimes())[j]].push_back(i);
 				} 
 			}
 		}

@@ -7,7 +7,7 @@
 /*!
  * @class RingBuffer
  *
- * @brief Contains every informations of potential variation due to other neurones.
+ * @brief Contains every informations of potential variation due to other neurons.
  * One vector's case represents one time step.
  */
 
